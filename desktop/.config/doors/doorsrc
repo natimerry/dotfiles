@@ -77,7 +77,7 @@ doorsctl config initial_polarity second_child
 
 doorsctl config blur_enabled true
 doorsctl config mica_enabled true
-doorsctl config blur_algorithm gaussian
+doorsctl config blur_algorithm box
 doorsctl config blur_radius 9
 
 doorsctl rule -a com.dec05eba.gpu_screen_recorder state=floating
