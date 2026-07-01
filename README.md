@@ -22,5 +22,4 @@ Useful commands:
 ```sh
 stow --dir ~/dotfiles --target ~ --no-folding --restow desktop
 stow --dir ~/dotfiles --target ~ --no-folding --delete desktop
-git -C ~/dotfiles status
 ```
