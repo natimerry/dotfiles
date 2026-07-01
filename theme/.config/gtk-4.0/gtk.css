@@ -1,0 +1,66 @@
+@import url('colors.css');
+@define-color wal_background #0f0d20;
+@define-color wal_foreground #c3c2c7;
+@define-color wal_cursor #c3c2c7;
+@define-color wal_color0 #0f0d20;
+@define-color wal_color1 #9B7C85;
+@define-color wal_color2 #668AAC;
+@define-color wal_color3 #5B98E1;
+@define-color wal_color4 #54CEF9;
+@define-color wal_color5 #A7A7CE;
+@define-color wal_color6 #9CE9F8;
+@define-color wal_color7 #c3c2c7;
+@define-color wal_color8 #605d71;
+@define-color wal_color9 #9B7C85;
+@define-color wal_color10 #668AAC;
+@define-color wal_color11 #5B98E1;
+@define-color wal_color12 #54CEF9;
+@define-color wal_color13 #A7A7CE;
+@define-color wal_color14 #9CE9F8;
+@define-color wal_color15 #c3c2c7;
+
+window,
+dialog,
+popover,
+menubar,
+menu,
+.background {
+  background-color: @wal_background;
+  color: @wal_foreground;
+}
+
+headerbar,
+toolbar,
+notebook > header {
+  background-color: @wal_color0;
+  color: @wal_foreground;
+}
+
+button,
+entry,
+spinbutton,
+combobox,
+switch,
+trough,
+treeview {
+  background-color: @wal_color0;
+  color: @wal_foreground;
+  border-color: @wal_color8;
+}
+
+button:hover,
+row:hover {
+  background-color: @wal_color8;
+}
+
+*:selected,
+selection,
+row:selected {
+  background-color: @wal_color4;
+  color: @wal_background;
+}
+
+link,
+button.link {
+  color: @wal_color6;
+}

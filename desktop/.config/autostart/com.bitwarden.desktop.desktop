@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Bitwarden
+X-XDP-Autostart=com.bitwarden.desktop
+Exec=flatpak run com.bitwarden.desktop
+X-Flatpak=com.bitwarden.desktop

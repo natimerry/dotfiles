@@ -1,0 +1,91 @@
+#!/bin/sh
+
+# Ported from dots/.config/bspwm/bspwmrc for the current Wayland outputs:
+# DP-2, 2560x1440@165, scale 1, position 0,0.
+# eDP-1, 2560x1600@240, scale 1.25, position 2560,0.
+
+run_if() {
+	command -v "$1" >/dev/null 2>&1 && "$@" &
+}
+
+# Output setup from the current kscreen/kdoctor state.
+doorsctl output DP-1enable
+doorsctl output DP-1 mode 2560x1440@165
+doorsctl output DP-1 position 0 0
+doorsctl output DP-1 scale 1
+
+doorsctl output eDP-1 enable
+doorsctl output eDP-1 mode 2560x1600@240
+doorsctl output eDP-1 position 2560 0
+doorsctl output eDP-1 scale 1.25
+
+# Keep Super+0 useful. The bspwmrc created 1-9, but sxhkd also bound desktop 10.
+doorsctl output DP-1 -d 1 2 3 4 5 6 7 8 9 10
+doorsctl output eDP-1 -d 1 2 3 4 5 6 7 8 9 10
+doorsctl desktop 1
+(sleep 1; doorsctl output DP-2 -d 1 2 3 4 5 6 7 8 9 10; doorsctl output eDP-1 -d 1 2 3 4 5 6 7 8 9 10; doorsctl desktop 1) &
+
+# bspwm visual/tiling settings.
+doorsctl config top_padding 22
+doorsctl config right_padding 0
+doorsctl config bottom_padding 0
+doorsctl config left_padding 0
+doorsctl config normal_border_gradient 282a36 44475a 90deg
+doorsctl config active_border_gradient 8be9fd bd93f9 90deg
+doorsctl config focused_border_gradient de83c6 ff79c6 90deg
+doorsctl config normal_border_gradient2 clear
+doorsctl config active_border_gradient2 clear
+doorsctl config focused_border_gradient2 clear
+doorsctl config normal_border_gradient_lerp 0.0
+doorsctl config active_border_gradient_lerp 0.0
+doorsctl config focused_border_gradient_lerp 0.0
+doorsctl config border_width 1
+doorsctl config window_gap 10
+doorsctl config click_to_focus true
+doorsctl config split_ratio 0.52
+doorsctl config borderless_monocle true
+doorsctl config gapless_monocle true
+doorsctl config single_monocle true
+doorsctl config decoration_mode tabs
+doorsctl config enable_animations true
+
+# Pointer defaults.
+doorsctl input type:touchpad tap true
+doorsctl input type:touchpad natural_scroll true
+
+# Wayland session helpers. All optional; missing programs are skipped.
+export XCURSOR_SIZE=24
+export HYPRCURSOR_THEME=rose-pine
+export HYPRCURSOR_SIZE=24
+export MOZ_ENABLE_WAYLAND=1
+
+# dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE WINIT_UNIX_BACKEND MOZ_ENABLE_WAYLAND QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE KDE_SESSION_VERSION XCURSOR_SIZE HYPRCURSOR_THEME HYPRCURSOR_SIZE >/dev/null 2>&1 &
+
+run_if mako
+run_if nm-applet
+run_if waybar -c "$HOME/.config/waybar/config.jsonc" -s "$HOME/.config/waybar/style.css"
+run_if waypaper --restore
+if ! pidof pipewire >/dev/null 2>&1; then
+	run_if gentoo-pipewire-launcher restart
+fi
+
+if [ -x /usr/libexec/xfce-polkit ]; then
+	/usr/libexec/xfce-polkit &
+fi
+
+doorsctl config initial_polarity second_child
+
+doorsctl config blur_enabled true
+doorsctl config mica_enabled true
+doorsctl config blur_algorithm gaussian
+doorsctl config blur_radius 9
+
+doorsctl rule -a com.dec05eba.gpu_screen_recorder state=floating
+doorsctl rule -a dev.zed.Zed blur=on mica=on
+doorsctl rule -a zen blur=on
+doorsctl rule -a discord desktop=8
+
+doorsctl rule -a com.mitchellh.ghostty blur=on 
+
+doorsctl rule -a Alacritty blur=on
+# doorsctl rule -a com.mitchellh.ghostty blur=on

@@ -1,0 +1,21 @@
+*~
+*.bak
+*.log
+*.pre-wpg
+.DS_Store
+__pycache__/
+
+# Runtime/generated theme output
+wal.css
+colors.css
+colors.toml
+state
+.current
+sequences
+wp_init.sh
+samples/
+schemes/
+wallpapers/
+
+# Local tool metadata
+.serena/

@@ -1,0 +1,172 @@
+#
+# Doors hotkeys ported from dots/.config/sxhkd/sxhkdrc
+#
+
+# terminal emulator
+super + Return
+	alacritty &
+
+# program launchers
+super + d
+	sh -c 'if command -v rofi >/dev/null 2>&1; then rofi -show drun; elif command -v fuzzel >/dev/null 2>&1; then fuzzel; else wofi --show=drun; fi'
+super + shift + d
+	~/.config/bspwm/rofi/bin/asroot
+super + e
+	rofi -show emoji
+
+# restart Waybar, matching the Hyprland binding
+super + F1
+	/home/nat/.config/waybar/scripts/wpg-sync-theme.sh reset
+
+# edit this hotkey config
+super + shift + F1
+	alacritty -e vim ~/.config/doors/doorshkrc
+
+# screenshots
+Print
+	~/.config/doors/screenshot.sh fullscreen
+alt + Print
+	~/.config/doors/screenshot.sh region
+super + shift + i
+	~/.config/doors/screenshot.sh region
+
+# quit Doors
+super + shift + e
+	doorsctl quit
+
+# close focused window
+super + shift + q
+	doorsctl node --close
+
+# desktop switching
+super + {1-9}
+	doorsctl desktop {1-9}
+super + 0
+	doorsctl desktop 10
+
+# send focused window to desktop
+super + shift + {1-9}
+	doorsctl node --to-desktop {1-9}
+super + shift + 0
+	doorsctl node --to-desktop 10
+
+# send focused window to monitor
+super + shift + h
+	doorsctl node --to-monitor DP-1 --follow
+super + shift + l
+	doorsctl node --to-monitor eDP-1 --follow
+
+# last focused workspace
+alt + Tab
+	doorsctl desktop last
+
+# split ratio presets
+super + ctrl + {1-9}
+	doorsctl node --ratio 0.{1-9}
+
+# fullscreen, floating, pseudo-tiled
+super + f
+	doorsctl toggle fullscreen
+super + space
+	doorsctl toggle floating
+super + p
+	doorsctl toggle pseudo_tiled
+
+# container/layout controls ported from Hyprland where Doors has equivalents
+super + alt + {h,j,k,l,q}
+	doorsctl presel {east,south,north,west,cancel}
+super + v
+	doorsctl node --type tabbed
+super + ctrl + h
+	doorsctl node --type horizontal
+super + ctrl + v
+	doorsctl node --type vertical
+super + bracketright
+	doorsctl node --type next_tab
+super + bracketleft
+	doorsctl node --type prev_tab
+super + shift + bracketright
+	doorsctl node --circulate forward
+super + shift + bracketleft
+	doorsctl node --circulate backward
+super + s
+	doorsctl node --circulate forward
+super + m
+	doorsctl rotate clockwise
+super + n
+	doorsctl rotate counterclockwise
+super + o
+	doorsctl desktop --layout tiled
+super + alt + m
+	doorsctl toggle monocle
+super + alt + s
+	doorsctl desktop --layout scroller
+
+# flags
+super + shift + space
+	doorsctl node --flag marked
+
+# focus, resize, and swap
+super + {Left,Down,Up,Right}
+	doorsctl focus {west,south,north,east}
+super + {h,j,k,l}
+	doorsctl focus {west,south,north,east}
+super + shift + {Left,Down,Up,Right}
+	doorsctl swap {west,south,north,east}
+super + shift + {h,j,k,l}
+	doorsctl swap {west,south,north,east}
+
+# resize tiled windows
+super + ctrl + {h,j,k,l}
+	doorsctl resize {left,down,up,right}
+super + ctrl + {Left,Down,Up,Right}
+	doorsctl resize {left,down,up,right}
+
+super + control + Left
+	doorsctl node --resize west -20 0
+super + control + Right
+	doorsctl node --resize east 20 0
+super + control + Up
+	doorsctl node --resize north 0 -20
+super + control + Down
+	doorsctl node --resize south 0 20
+
+# move floating windows
+# floating window mouse interactions
+super + mouse_left
+	doorsctl node interactive_move
+super + mouse_right
+	doorsctl node interactive_resize
+
+# user-specific launchers
+super + w
+	brave
+super + r
+	thunar
+super + x
+	betterlockscreen -l
+super + shift + s
+	launchspotify
+super + c
+	code
+
+# screen brightness control
+XF86MonBrightnessDown
+	brightnessctl set 5%-
+XF86MonBrightnessUp
+	brightnessctl set +5%
+
+# volume control
+XF86AudioRaiseVolume
+	wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+XF86AudioLowerVolume
+	wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+XF86AudioMute
+	wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+XF86AudioMicMute
+	wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+# media keys
+XF86Audio{Next,Prev,Play,Stop}
+	playerctl --all-players {next,previous,play-pause,stop}
+doorsctl config initial_polarity second_child

@@ -1,0 +1,99 @@
+{
+    "spacing": 0,
+    "height": 30,
+    "fixed-center": true,
+
+    "modules-left": ["doors/workspaces"],
+    "modules-center": ["doors/window"],
+    "modules-right": [
+        "custom/palette",
+        "custom/wifi",
+        "custom/sep",
+        /* "tray", */
+        "wlr/taskbar",
+        "pulseaudio",
+        "cpu",
+        "memory",
+        "temperature",
+        "custom/sep",
+        "clock",
+        "custom/endcap"
+    ],
+
+    /*
+    MODULES
+    */
+    "doors/workspaces": {
+        "format": "{name}",
+        "disable-click": false,
+        "all-outputs": false
+    },
+    "doors/window": {
+        "format": " {title}",
+        "max-length": 90,
+        "icon": false
+    },
+    "custom/palette": {
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "Import current Waypaper wallpaper into wpg and regenerate colors",
+        "on-click": "~/.config/waybar/scripts/wpg-sync-theme.sh reset"
+    },
+    "custom/wifi": {
+        "exec": "~/.config/waybar/scripts/wifi-rofi.sh status",
+        "format": "{}",
+        "interval": 5,
+        "return-type": "json",
+        "tooltip": true,
+        "on-click": "~/.config/waybar/scripts/wifi-rofi.sh pick"
+    },
+    "custom/sep": {
+        "format": "│",
+        "tooltip": false
+    },
+    "custom/endcap": {
+        "format": "◆",
+        "tooltip": false
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>[{:%Y %B}]</big>\n<tt><small>{calendar}</small></tt>",
+        "format": " {:%H:%M:%S}",
+        "format-alt": " {:%A, %b %d - %H:%M:%S}"
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": " {percentage}%"
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "format-critical": "!!{temperatureC}°C!!",
+        "format": " {temperatureC}°C"
+    },
+    "battery": {
+        "format": " {capacity}%"
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": " {volume}%",
+        "format-muted": " muted",
+        "on-click": "pavucontrol"
+    },
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 14,
+        "all-outputs": true,
+        "tooltip-format": "{name}: {title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": ["rofi"]
+    },
+}

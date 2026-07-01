@@ -1,0 +1,202 @@
+@import "wal.css";
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrains Mono NL", "Font Awesome 6 Free", "Font Awesome 6 Brands", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @background;
+  color: @foreground;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  background: @background;
+}
+
+tooltip {
+  background: @background;
+  border: 1px solid @color8;
+  color: @foreground;
+}
+
+#workspaces,
+#ext-workspaces {
+  background: @background;
+  padding: 0 4px;
+}
+
+#workspaces button,
+#ext-workspaces button {
+  background: transparent;
+  color: @foreground;
+  padding: 0 8px;
+  margin: 0;
+  border-bottom: 2px solid transparent;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+#workspaces button:hover,
+#ext-workspaces button:hover {
+  background: @color0;
+  color: @foreground;
+}
+
+#workspaces button.occupied,
+#ext-workspaces button.occupied {
+  color: @color6;
+  border-bottom-color: transparent;
+}
+
+#workspaces button.urgent,
+#ext-workspaces button.urgent {
+  background: @color1;
+  color: @foreground;
+  border-bottom-color: @color1;
+  font-weight: 800;
+}
+
+#workspaces button.active,
+#workspaces button.focused,
+#workspaces button.visible,
+#ext-workspaces button.active,
+#ext-workspaces button.focused,
+#ext-workspaces button.visible {
+  background: @color0;
+  color: @foreground;
+  border-bottom-color: @color4;
+  font-weight: 800;
+}
+
+#window {
+  background: @color0;
+  color: @foreground;
+  padding: 0 18px;
+  margin: 0 8px;
+  font-weight: 700;
+  border-bottom: 2px solid @color4;
+}
+
+#custom-palette,
+#custom-wifi,
+#custom-endcap {
+  background: @color0;
+  color: @foreground;
+  padding: 0 9px;
+  margin: 0 3px;
+  border-bottom: 2px solid transparent;
+}
+
+#custom-palette {
+  background: @color5;
+  color: @background;
+  border-bottom-color: @color13;
+}
+
+#custom-wifi {
+  background: @color6;
+  color: @background;
+  border-bottom-color: @color14;
+}
+
+#custom-wifi.disconnected {
+  background: @color3;
+  color: @background;
+  border-bottom-color: @color11;
+}
+
+#custom-wifi.disabled {
+  background: @color1;
+  color: @background;
+  border-bottom-color: @color9;
+}
+
+#custom-sep {
+  background: @background;
+  color: @color4;
+  padding: 0 5px;
+}
+
+#custom-endcap {
+  color: @color4;
+  padding-right: 12px;
+}
+
+#taskbar {
+  background: @background;
+  color: @foreground;
+  padding: 0 4px;
+}
+
+#taskbar button {
+  background: transparent;
+  color: @foreground;
+  padding: 0 5px;
+}
+
+#taskbar button.active {
+  background: @color0;
+  color: @foreground;
+}
+
+#pulseaudio {
+  background: @color6;
+  color: @background;
+  padding: 0 12px;
+  margin: 0 4px;
+}
+
+#cpu {
+  background: @color5;
+  color: @background;
+  padding: 0 10px;
+  margin: 0 4px;
+}
+
+#memory {
+  background: @color4;
+  color: @background;
+  padding: 0 10px;
+  margin: 0 4px;
+}
+
+#temperature {
+  background: @color2;
+  color: @background;
+  padding: 0 10px;
+  margin: 0 4px;
+}
+
+#temperature.critical {
+  background: @color1;
+  color: @background;
+}
+
+#battery {
+  background: @color2;
+  color: @background;
+  padding: 0 10px;
+  margin: 0 4px;
+}
+
+#clock {
+  background: @color0;
+  color: @foreground;
+  padding: 0 10px;
+  margin: 0 4px;
+  border-bottom: 2px solid @color4;
+}
+
+#tray {
+  background: @background;
+  color: @foreground;
+  padding: 0 6px;
+  margin: 0 4px;
+}
