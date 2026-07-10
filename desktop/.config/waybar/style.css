@@ -4,7 +4,7 @@
   border: none;
   border-radius: 0;
   font-family: "JetBrains Mono NL", "Font Awesome 6 Free", "Font Awesome 6 Brands", monospace;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   min-height: 0;
 }
@@ -36,6 +36,7 @@ tooltip {
 #ext-workspaces button {
   background: transparent;
   color: @foreground;
+  min-width: 0;
   padding: 0 8px;
   margin: 0;
   border-bottom: 2px solid transparent;
@@ -78,8 +79,9 @@ tooltip {
 #window {
   background: @color0;
   color: @foreground;
+  border-radius: 3px;
   padding: 0 18px;
-  margin: 0 8px;
+  margin: 3px 8px;
   font-weight: 700;
   border-bottom: 2px solid @color4;
 }
@@ -89,8 +91,9 @@ tooltip {
 #custom-endcap {
   background: @color0;
   color: @foreground;
+  border-radius: 3px;
   padding: 0 9px;
-  margin: 0 3px;
+  margin: 3px;
   border-bottom: 2px solid transparent;
 }
 
@@ -132,12 +135,16 @@ tooltip {
 #taskbar {
   background: @background;
   color: @foreground;
+  border-radius: 3px;
   padding: 0 4px;
+  margin: 3px 4px;
 }
 
 #taskbar button {
   background: transparent;
   color: @foreground;
+  border-radius: 2px;
+  min-width: 0;
   padding: 0 5px;
 }
 
@@ -149,29 +156,33 @@ tooltip {
 #pulseaudio {
   background: @color6;
   color: @background;
+  border-radius: 3px;
   padding: 0 12px;
-  margin: 0 4px;
+  margin: 3px 4px;
 }
 
 #cpu {
   background: @color5;
   color: @background;
+  border-radius: 3px;
   padding: 0 10px;
-  margin: 0 4px;
+  margin: 3px 4px;
 }
 
 #memory {
   background: @color4;
   color: @background;
+  border-radius: 3px;
   padding: 0 10px;
-  margin: 0 4px;
+  margin: 3px 4px;
 }
 
 #temperature {
   background: @color2;
   color: @background;
+  border-radius: 3px;
   padding: 0 10px;
-  margin: 0 4px;
+  margin: 3px 4px;
 }
 
 #temperature.critical {
@@ -182,21 +193,24 @@ tooltip {
 #battery {
   background: @color2;
   color: @background;
+  border-radius: 3px;
   padding: 0 10px;
-  margin: 0 4px;
+  margin: 3px 4px;
 }
 
 #clock {
   background: @color0;
   color: @foreground;
+  border-radius: 3px;
   padding: 0 10px;
-  margin: 0 4px;
+  margin: 3px 4px;
   border-bottom: 2px solid @color4;
 }
 
 #tray {
   background: @background;
   color: @foreground;
+  border-radius: 3px;
   padding: 0 6px;
-  margin: 0 4px;
+  margin: 3px 4px;
 }

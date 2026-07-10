@@ -1,29 +1,57 @@
 #!/bin/sh
 
 # Ported from dots/.config/bspwm/bspwmrc for the current Wayland outputs:
-# DP-2, 2560x1440@165, scale 1, position 0,0.
-# eDP-1, 2560x1600@240, scale 1.25, position 2560,0.
+# DP-1/DP-2 external, 2560x1440@165, scale 1, position 0,0.
+# eDP-1 internal, 2560x1600@240, scale 1.25.
 
 run_if() {
 	command -v "$1" >/dev/null 2>&1 && "$@" &
 }
 
-# Output setup from the current kscreen/kdoctor state.
-doorsctl output DP-1enable
-doorsctl output DP-1 mode 2560x1440@165
-doorsctl output DP-1 position 0 0
-doorsctl output DP-1 scale 1
+output_exists() {
+	doorsctl output list | jq -e --arg name "$1" '.[] | select(.name == $name)' >/dev/null
+}
 
-doorsctl output eDP-1 enable
-doorsctl output eDP-1 mode 2560x1600@240
-doorsctl output eDP-1 position 2560 0
-doorsctl output eDP-1 scale 1.25
+configure_outputs() {
+	desktops="1 2 3 4 5 6 7 8 9 10"
+	external=
 
-# Keep Super+0 useful. The bspwmrc created 1-9, but sxhkd also bound desktop 10.
-doorsctl output DP-1 -d 1 2 3 4 5 6 7 8 9 10
-doorsctl output eDP-1 -d 1 2 3 4 5 6 7 8 9 10
-doorsctl desktop 1
-(sleep 1; doorsctl output DP-2 -d 1 2 3 4 5 6 7 8 9 10; doorsctl output eDP-1 -d 1 2 3 4 5 6 7 8 9 10; doorsctl desktop 1) &
+	if output_exists DP-1; then
+		external=DP-1
+	elif output_exists DP-2; then
+		external=DP-2
+	fi
+
+	doorsctl output eDP-1 enable
+	doorsctl output eDP-1 mode 2560x1600@240
+	doorsctl output eDP-1 scale 1.25
+
+	if [ -n "$external" ]; then
+		doorsctl output "$external" enable
+		doorsctl output "$external" mode 2560x1440@165
+		doorsctl output "$external" position 0 0
+		doorsctl output "$external" scale 1
+		doorsctl output eDP-1 position 2560 0
+
+		# Keep Super+0 useful. The bspwmrc created 1-9, but sxhkd also bound desktop 10.
+		doorsctl output "$external" -d $desktops
+		doorsctl output eDP-1 -d $desktops
+		doorsctl output "$external" focus
+	else
+		doorsctl output eDP-1 position 0 0
+		doorsctl output eDP-1 -d $desktops
+		doorsctl output eDP-1 focus
+	fi
+
+	doorsctl desktop 1
+}
+
+
+doorsctl desktop --layout master_stack
+
+# Re-run once after startup so a slightly late DP output still gets the external layout.
+configure_outputs
+(sleep 1; configure_outputs) &
 
 # bspwm visual/tiling settings.
 doorsctl config top_padding 22
@@ -53,13 +81,11 @@ doorsctl config enable_animations true
 doorsctl input type:touchpad tap true
 doorsctl input type:touchpad natural_scroll true
 
-# Wayland session helpers. All optional; missing programs are skipped.
-export XCURSOR_SIZE=24
-export HYPRCURSOR_THEME=rose-pine
-export HYPRCURSOR_SIZE=24
-export MOZ_ENABLE_WAYLAND=1
+doorsctl env set XCURSOR_SIZE 24
+doorsctl env set MOZ_ENABLE_WAYLAND 1
+doorsctl env set XDG_CURRENT_DESKTOP doors
+doorsctl env set QT_QPA_PLATFORMTHEME qt6ct
 
-# dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE WINIT_UNIX_BACKEND MOZ_ENABLE_WAYLAND QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE KDE_SESSION_VERSION XCURSOR_SIZE HYPRCURSOR_THEME HYPRCURSOR_SIZE >/dev/null 2>&1 &
 
 run_if mako
 run_if nm-applet
@@ -73,12 +99,10 @@ if [ -x /usr/libexec/xfce-polkit ]; then
 	/usr/libexec/xfce-polkit &
 fi
 
-doorsctl config initial_polarity second_child
-
 doorsctl config blur_enabled true
 doorsctl config mica_enabled true
 doorsctl config blur_algorithm box
-doorsctl config blur_radius 9
+doorsctl config blur_radius 15
 
 doorsctl rule -a com.dec05eba.gpu_screen_recorder state=floating
 doorsctl rule -a dev.zed.Zed blur=on mica=on
@@ -89,3 +113,24 @@ doorsctl rule -a com.mitchellh.ghostty blur=on
 
 doorsctl rule -a Alacritty blur=on
 # doorsctl rule -a com.mitchellh.ghostty blur=on
+
+systemctl --user set-environment \
+    XDG_CURRENT_DESKTOP=doors \
+
+systemctl --user import-environment \
+    DISPLAY \
+    WAYLAND_DISPLAY \
+    XDG_CURRENT_DESKTOP \
+    QT_QPA_PLATFORMTHEME
+
+dbus-update-activation-environment --systemd \
+    DISPLAY \
+    WAYLAND_DISPLAY \
+    XDG_CURRENT_DESKTOP=doors \
+
+
+doorsctl env set QT_QPA_PLATFORMTHEME qt6ct
+doorsctl env set QT_QPA_PLATFORM wayland
+
+systemctl --user start doors-session.service
+xwaylandvideobridge &

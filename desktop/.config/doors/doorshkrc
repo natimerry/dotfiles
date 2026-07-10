@@ -62,7 +62,7 @@ alt + Tab
 
 # split ratio presets
 super + ctrl + {1-9}
-	doorsctl node --ratio 0.{1-9}
+	doorsctl master_stack set_ratio 0.{1-9}
 
 # fullscreen, floating, pseudo-tiled
 super + f
@@ -70,17 +70,19 @@ super + f
 super + space
 	doorsctl toggle floating
 super + p
-	doorsctl toggle pseudo_tiled
+	doorsctl master_stack promote
 
 # container/layout controls ported from Hyprland where Doors has equivalents
 super + alt + {h,j,k,l,q}
 	doorsctl presel {east,south,north,west,cancel}
 super + v
 	doorsctl node --type tabbed
-super + ctrl + h
-	doorsctl node --type horizontal
 super + ctrl + v
 	doorsctl node --type vertical
+super + ctrl + {h,j,k,l,c}
+	doorsctl master_stack orientation {left,bottom,top,right,center}
+super + ctrl + i
+	doorsctl master_stack cycle_stack_layout
 super + bracketright
 	doorsctl node --type next_tab
 super + bracketleft
@@ -96,7 +98,7 @@ super + m
 super + n
 	doorsctl rotate counterclockwise
 super + o
-	doorsctl desktop --layout tiled
+	doorsctl master_stack demote
 super + alt + m
 	doorsctl toggle monocle
 super + alt + s
@@ -117,8 +119,6 @@ super + shift + {h,j,k,l}
 	doorsctl swap {west,south,north,east}
 
 # resize tiled windows
-super + ctrl + {h,j,k,l}
-	doorsctl resize {left,down,up,right}
 super + ctrl + {Left,Down,Up,Right}
 	doorsctl resize {left,down,up,right}
 
@@ -142,7 +142,7 @@ super + mouse_right
 super + w
 	brave
 super + r
-	thunar
+	dolphin 
 super + x
 	betterlockscreen -l
 super + shift + s
@@ -169,4 +169,3 @@ XF86AudioMicMute
 # media keys
 XF86Audio{Next,Prev,Play,Stop}
 	playerctl --all-players {next,previous,play-pause,stop}
-doorsctl config initial_polarity second_child

@@ -7,11 +7,8 @@ CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/wal"
 PYWAL_CSS="$CACHE_DIR/colors-waybar.css"
 PYWAL_ALACRITTY="$CACHE_DIR/colors-alacritty.toml"
 WAL_BIN="${WAL_BIN:-wal}"
-DESKTOP_THEME_SCRIPT="$WAYBAR_DIR/scripts/wal-desktop-theme.sh"
-APPLY_DESKTOP_THEME="${APPLY_DESKTOP_THEME:-0}"
 ALACRITTY_COLORS="${ALACRITTY_COLORS:-${XDG_CONFIG_HOME:-$HOME/.config}/alacritty/colors.toml}"
 SYNC_ALACRITTY="${SYNC_ALACRITTY:-1}"
-SYNC_WAL_GTK="${SYNC_WAL_GTK:-0}"
 
 usage() {
   cat <<EOF
@@ -26,7 +23,6 @@ Usage:
 Environment:
   WAYBAR_DIR  Waybar config directory. Defaults to \$XDG_CONFIG_HOME/waybar.
   WAL_BIN     pywal command. Defaults to wal.
-  SYNC_WAL_GTK=1 runs wal-gtk after pywal if wal-gtk is installed.
 EOF
 }
 
@@ -134,23 +130,6 @@ restart_waybar() {
   nohup waybar >/dev/null 2>&1 &
 }
 
-apply_desktop_theme() {
-  if [ "$APPLY_DESKTOP_THEME" = "1" ] && [ -x "$DESKTOP_THEME_SCRIPT" ]; then
-    "$DESKTOP_THEME_SCRIPT" || true
-  fi
-}
-
-sync_wal_gtk() {
-  [ "$SYNC_WAL_GTK" = "1" ] || return 0
-
-  if ! has wal-gtk; then
-    echo "SYNC_WAL_GTK=1 set, but wal-gtk is not installed" >&2
-    return 0
-  fi
-
-  wal-gtk || true
-}
-
 latest_image_in_dir() {
   dir="$1"
   [ -d "$dir" ] || return 1
@@ -215,8 +194,6 @@ run_wal() {
   "$WAL_BIN" -n -q -i "$image"
   sync_colors
   sync_alacritty
-  sync_wal_gtk
-  apply_desktop_theme
   restart_waybar
 }
 

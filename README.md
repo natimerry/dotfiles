@@ -10,11 +10,11 @@ Packages:
 
 - `shell`: Bash/Zsh startup files
 - `desktop`: Doors, Waybar, Waypaper, Mako, Rofi, Wofi, Thunar, and desktop defaults
-- `theme`: GTK 2/3/4 source settings plus minimal wpgtk/pywal configuration
+- `theme`: static GTK 2/3/4 and Qt 6 appearance settings
 - `terminal`: Alacritty and Ghostty source configuration
 - `editors`: Helix configuration and themes
 
-Generated pywal/wpgtk outputs, caches, wallpapers, samples, downloaded color collections,
+Generated wpgtk outputs, caches, wallpapers, samples, downloaded color collections,
 application databases, histories, browser profiles, and secret-bearing configs are excluded.
 
 Useful commands:

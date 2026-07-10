@@ -1,6 +1,6 @@
 #!/bin/sh
 
-savedir="${DOORS_SCREENSHOT_DIR:-$HOME/pictures/screenshots}"
+savedir="${DOORS_SCREENSHOT_DIR:-$HOME/Pictures/screenshots}"
 mkdir -p "$savedir"
 
 file="$savedir/$(date +'%Y-%m-%d-%H%M%S_screenshot.png')"

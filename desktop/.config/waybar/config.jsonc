@@ -10,14 +10,14 @@
         "custom/wifi",
         "custom/sep",
         /* "tray", */
-        "wlr/taskbar",
         "pulseaudio",
         "cpu",
         "memory",
         "temperature",
         "custom/sep",
         "clock",
-        "custom/endcap"
+        "custom/endcap",
+        "wlr/taskbar"
     ],
 
     /*

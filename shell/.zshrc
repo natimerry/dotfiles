@@ -277,13 +277,8 @@ nvm() {
   nvm "$@"
 }
 
-# Added by LM Studio CLI tool (lms)
-export PATH="$PATH:/home/nat/.lmstudio/bin"
 
-[ -f ~/.free-coding-models.env ] && . ~/.free-coding-models.env  # free-coding-models-env
-export PATH="$PATH:$(go env GOPATH)/bin"
-
-# Added by codebase-memory-mcp install
-export PATH="/home/nat/.local/bin:$PATH"
-
-export PATH=$PATH:/home/nat/.spicetify
+# Show fastfetch only in the first Alacritty window.
+if [[ $TERM == alacritty* ]] && [[ "$(pgrep -xc alacritty)" -eq 1 ]]; then
+    fastfetch
+fi
