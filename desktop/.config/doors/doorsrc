@@ -44,10 +44,9 @@ configure_outputs() {
 	fi
 
 	doorsctl desktop 1
+	doorsctl desktop --layout master_stack
 }
 
-
-doorsctl desktop --layout master_stack
 
 # Re-run once after startup so a slightly late DP output still gets the external layout.
 configure_outputs
@@ -134,3 +133,5 @@ doorsctl env set QT_QPA_PLATFORM wayland
 
 systemctl --user start doors-session.service
 xwaylandvideobridge &
+
+doorsctl desktop --layout master_stack

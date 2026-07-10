@@ -84,8 +84,11 @@
     "editor.indent_guide": "#ffffff25",
     "editor.indent_guide_active": "#ffffff70",
 
-    "surface.background": "#ffffff08",
-    "elevated_surface.background": "#ffffff12",
+    "surface.background": "#18181bff",
+    "elevated_surface.background": "#18181bff",
+    "editor.document_highlight.bracket_background": "#3f3f46ff",
+    "editor.document_highlight.read_background": "#3f3f46ff",
+    "editor.document_highlight.write_background": "#3f3f46ff",
   },
   
 }
